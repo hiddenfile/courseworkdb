@@ -1,2 +1,2 @@
-class DepartamentType < ApplicationRecord
+class DepartmentType < ApplicationRecord
 end
