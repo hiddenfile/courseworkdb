@@ -1,4 +1,4 @@
-x# == Schema Information
+# == Schema Information
 #
 # Table name: blocks
 #
