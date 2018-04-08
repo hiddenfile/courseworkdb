@@ -9,4 +9,6 @@
 #
 
 class Laboratory < ApplicationRecord
+  has_many :analyzes, dependent: :destroy
+  has_many :contracts, dependent: :destroy
 end

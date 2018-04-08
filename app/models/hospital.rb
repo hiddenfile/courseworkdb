@@ -10,4 +10,9 @@
 #
 
 class Hospital < ApplicationRecord
+  has_many :blocks
+  has_many :contracts, as: :clinic, dependent: :destroy
+  has_many :patient_cards, as: :clinic, dependent: :destroy
+  has_one :polyclinic
+  has_many :hospital_staffs
 end

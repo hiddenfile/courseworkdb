@@ -1,4 +1,4 @@
-# == Schema Information
+x# == Schema Information
 #
 # Table name: blocks
 #
@@ -10,5 +10,6 @@
 #
 
 class Block < ApplicationRecord
-  belongs_to :hostpital
+  belongs_to :hospital
+  has_many :departments
 end

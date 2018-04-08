@@ -9,4 +9,5 @@
 #
 
 class DepartmentType < ApplicationRecord
+  has_many :departments
 end

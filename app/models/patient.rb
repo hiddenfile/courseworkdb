@@ -10,4 +10,7 @@
 #
 
 class Patient < ApplicationRecord
+  has_many :analyzes
+  has_many :beds
+  has_many :patient_cards
 end
