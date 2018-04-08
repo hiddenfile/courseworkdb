@@ -11,5 +11,5 @@ x# == Schema Information
 
 class Block < ApplicationRecord
   belongs_to :hospital
-  has_many :departments
+  has_many :departments, dependent: :destroy
 end

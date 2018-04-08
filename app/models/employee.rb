@@ -13,6 +13,6 @@
 
 class Employee < ApplicationRecord
   belongs_to :employee_category
-  has_many :hospital_staffs
-  has_many :patient_cards
+  has_many :hospital_staffs, dependent: :destroy
+  has_many :patient_cards, dependent: :destroy
 end

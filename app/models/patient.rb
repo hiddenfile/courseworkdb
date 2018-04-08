@@ -10,7 +10,7 @@
 #
 
 class Patient < ApplicationRecord
-  has_many :analyzes
-  has_many :beds
-  has_many :patient_cards
+  has_many :analyzes, dependent: :destroy
+  has_many :beds, dependent: :destroy
+  has_many :patient_cards, dependent: :destroy
 end

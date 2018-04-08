@@ -11,5 +11,5 @@
 
 class Ward < ApplicationRecord
   belongs_to :department
-  has_many :beds
+  has_many :beds, dependent: :destroy
 end
