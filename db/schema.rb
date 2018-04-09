@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180404225817) do
+ActiveRecord::Schema.define(version: 20180409215238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,8 +75,6 @@ ActiveRecord::Schema.define(version: 20180404225817) do
     t.integer "salary_incrase"
     t.integer "vacation"
     t.integer "danger"
-    t.integer "operation_count"
-    t.integer "operation_fails"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -88,6 +86,8 @@ ActiveRecord::Schema.define(version: 20180404225817) do
     t.bigint "employee_category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "operation_count"
+    t.integer "operation_fails"
     t.index ["employee_category_id"], name: "index_employees_on_employee_category_id"
   end
 
