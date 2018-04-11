@@ -105,8 +105,8 @@ end
 
 puts "block.rb"
 Hospital.all.each do |hospital|
-  (rand(10)+1).times do |i|
-    Block.create!(name: "Block N#{i}", hospital: hospital)
+  rand(10).times do |i|
+    Block.create!(name: "Block N#{i+1}", hospital: hospital)
   end
 end
 
@@ -124,15 +124,15 @@ end
 
 puts "ward.rb"
 Department.all.each do |department|
-  (rand(5)+1).times do |i|
-    Ward.create!(department: department, name: "Warn N#{i}")
+  rand(5).times do |i|
+    Ward.create!(department: department, name: "Warn N#{i+1}")
   end
 end
 
 puts "bed.rb"
 Ward.all.each do |ward|
-  (rand(10)+1).times do |i|
-    Bed.create!(ward: ward, bed_number: i, patient: Patient.all.sample)
+  rand(10).times do |i|
+    Bed.create!(ward: ward, bed_number: i+1, patient: Patient.all.sample)
   end
 end
 
@@ -149,7 +149,7 @@ puts "polyclinic_staff.rb"
 PolyclinicStaff.all.each do |hospital|
   Employee.all.each do |employee|
     unless employee.id.even?
-      HospitalStaff.create!(employee: employee, hospital: hospital)
+      PolyclinicStaff.create!(employee: employee, hospital: hospital)
     end
   end
 end
