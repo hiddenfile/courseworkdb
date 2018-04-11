@@ -125,7 +125,7 @@ end
 puts "ward.rb"
 Department.all.each do |department|
   rand(5).times do |i|
-    Ward.create!(department: department, name: "Warn N#{i+1}")
+    Ward.create!(department: department, name: "Ward N#{i+1}")
   end
 end
 
