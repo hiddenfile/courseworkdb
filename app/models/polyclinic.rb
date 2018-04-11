@@ -10,7 +10,7 @@
 #
 
 class Polyclinic < ApplicationRecord
-  belongs_to :hospital
+  belongs_to :hospital, required: false
   has_many :contracts, as: :clinic, dependent: :destroy
   has_many :patient_cards, as: :clinic, dependent: :destroy
 end

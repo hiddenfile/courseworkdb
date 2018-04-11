@@ -1,20 +1,20 @@
 puts "Seeds"
 puts "patient.rb"
 100.times do
-  Patient.create(first_name: Forgery('name').first_name, last_name: Forgery('name').last_name)
+  Patient.create!(first_name: Forgery('name').first_name, last_name: Forgery('name').last_name)
 end
 
 puts "hospital.rb"
 5.times do
-  Hospital.create(name: "#{Forgery('name').full_name}. Hospital", city: Forgery('address').city)
+  Hospital.create!(name: "#{Forgery('name').full_name}. Hospital", city: Forgery('address').city)
 end
 
 puts "polyclinic.rb"
 5.times do
-  Polyclinic.create(name: "#{Forgery('name').full_name}. Clinic")
+  Polyclinic.create!(name: "#{Forgery('name').full_name}. Clinic")
 end
 Hospital.pluck(:id).shuffle.each do |hospital_id|
-  Polyclinic.create(hospital_id: hospital_id, name: "#{Forgery('name').full_name}. Clinic")
+  Polyclinic.create!(hospital_id: hospital_id, name: "#{Forgery('name').full_name}. Clinic")
 end
 
 puts "employee_category.rb"
@@ -22,7 +22,7 @@ puts "employee_category.rb"
 Neurologist Pediatrician Psychiatrist Dentist Therapist Urologist Surgeon Endocrinologist
 Pediatrician Rheumatologist FamilyDoctor Pharmacologist).each do|kind|
   4.times do |level|
-    EmployeeCategory.create(kind: kind, level: level, salary_incrase: 10*level, vacation: 1*level, danger: 5*level)
+    EmployeeCategory.create!(kind: kind, level: level, salary_incrase: 10*level, vacation: 1*level, danger: 5*level)
   end
 end
 
@@ -33,7 +33,7 @@ EmployeeCategory.all.each do |category|
     operation_count = rand(100)
     operation_fails = rand(100)
   end
-  Employee.create(first_name: Forgery('name').first_name, last_name: Forgery('name').last_name,
+  Employee.create!(first_name: Forgery('name').first_name, last_name: Forgery('name').last_name,
                   employee_category: category, operation_fails: operation_fails, operation_count: operation_count)
 end
 categories = EmployeeCategory.all
@@ -44,7 +44,7 @@ categories = EmployeeCategory.all
     operation_count = rand(100)
     operation_fails = rand(100)
   end
-  Employee.create(first_name: Forgery('name').first_name, last_name: Forgery('name').last_name,
+  Employee.create!(first_name: Forgery('name').first_name, last_name: Forgery('name').last_name,
                   employee_category: category, operation_fails: operation_fails, operation_count: operation_count)
 end
 
@@ -69,7 +69,7 @@ count = 0
         break if count > 100000
         start_time = (5.year.ago + rand(1000).days)
         end_time = start_time + rand(1000).days
-        PatientCard.create(clinic: clinic, diagnosis: diagnosis, employee: employee, patient: patient,
+        PatientCard.create!(clinic: clinic, diagnosis: diagnosis, employee: employee, patient: patient,
                            begin: start_time,
                            end: end_time
 
@@ -83,13 +83,13 @@ end
 
 puts "laboratory.rb"
 10.times do
-  Laboratory.create(name: "#{Forgery('name').full_name}. Lab")
+  Laboratory.create!(name: "#{Forgery('name').full_name}. Lab")
 end
 
 puts "analyze.rb"
 Laboratory.all.each do |laboratory|
   Patient.all.each do |patient|
-    Analyze.create(name: "Analyze set N#{rand(10)+ 1}", laboratory: laboratory, patient: patient)
+    Analyze.create!(name: "Analyze set N#{rand(10)+ 1}", laboratory: laboratory, patient: patient)
   end
 end
 
@@ -97,7 +97,7 @@ puts "contract.rb"
 Laboratory.all.each do |laboratory|
   [Polyclinic, Hospital].each do |hospital|
     hospital.all.each do |clinic|
-      Contract.create(clinic: clinic, laboratory: laboratory, description: Forgery('lorem_ipsum').text	)
+      Contract.create!(clinic: clinic, laboratory: laboratory, description: Forgery('lorem_ipsum').text	)
     end
   end
 end
@@ -106,33 +106,33 @@ end
 puts "block.rb"
 Hospital.all.each do |hospital|
   (rand(10)+1).times do |i|
-    Block.create(name: "Block N#{i}")
+    Block.create!(name: "Block N#{i}", hospital: hospital)
   end
 end
 
 puts "department_type.rb"
 %w(Sanitary Therapeutic Surgical Gynecological Clinical Emergency Morgue).each do |name|
-  DepartmentType.create(name: name)
+  DepartmentType.create!(name: name)
 end
 
 puts "department.rb"
 Block.all.each do |block|
   (rand(2)+1).times do
-    Department.create(block: block, department_type: DepartmentType.all.sample)
+    Department.create!(block: block, department_type: DepartmentType.all.sample)
   end
 end
 
 puts "ward.rb"
 Department.all.each do |department|
   (rand(5)+1).times do |i|
-    Ward.create(department: department, name: "Warn N#{i}")
+    Ward.create!(department: department, name: "Warn N#{i}")
   end
 end
 
 puts "bed.rb"
 Ward.all.each do |ward|
   (rand(10)+1).times do |i|
-    Bed.create(ward: ward, bed_number: i, patient: Patient.all.sample)
+    Bed.create!(ward: ward, bed_number: i, patient: Patient.all.sample)
   end
 end
 
@@ -140,7 +140,7 @@ puts "hospital_staff.rb"
 Hospital.all.each do |hospital|
   Employee.all.each do |employee|
     if employee.id.even?
-      HospitalStaff.create(employee: employee, hospital: hospital)
+      HospitalStaff.create!(employee: employee, hospital: hospital)
     end
   end
 end
@@ -149,7 +149,7 @@ puts "polyclinic_staff.rb"
 PolyclinicStaff.all.each do |hospital|
   Employee.all.each do |employee|
     unless employee.id.even?
-      HospitalStaff.create(employee: employee, hospital: hospital)
+      HospitalStaff.create!(employee: employee, hospital: hospital)
     end
   end
 end
