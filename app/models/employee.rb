@@ -9,6 +9,8 @@
 #  employee_category_id :integer
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
+#  operation_count      :integer
+#  operation_fails      :integer
 #
 
 class Employee < ApplicationRecord
