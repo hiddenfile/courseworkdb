@@ -146,10 +146,10 @@ Hospital.all.each do |hospital|
 end
 
 puts "polyclinic_staff.rb"
-PolyclinicStaff.all.each do |hospital|
+Polyclinic.all.each do |polyclinic|
   Employee.all.each do |employee|
     unless employee.id.even?
-      PolyclinicStaff.create!(employee: employee, hospital: hospital)
+      PolyclinicStaff.create!(employee: employee, polyclinic: polyclinic)
     end
   end
 end
