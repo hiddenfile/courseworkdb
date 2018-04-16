@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180411152642) do
+ActiveRecord::Schema.define(version: 20180416182518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,26 +69,14 @@ ActiveRecord::Schema.define(version: 20180411152642) do
     t.index ["department_type_id"], name: "index_departments_on_department_type_id"
   end
 
-  create_table "employee_categories", force: :cascade do |t|
-    t.string "kind"
-    t.integer "level"
-    t.integer "salary_incrase"
-    t.integer "vacation"
-    t.integer "danger"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "employees", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "academic_degree"
-    t.bigint "employee_category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "operation_count"
-    t.integer "operation_fails"
-    t.index ["employee_category_id"], name: "index_employees_on_employee_category_id"
+    t.string "specialty"
+    t.integer "level"
   end
 
   create_table "hospital_staffs", force: :cascade do |t|
@@ -123,6 +111,8 @@ ActiveRecord::Schema.define(version: 20180411152642) do
     t.datetime "end"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "operations_success"
+    t.integer "operations_fails"
     t.index ["clinic_type", "clinic_id"], name: "index_patient_cards_on_clinic_type_and_clinic_id"
     t.index ["employee_id"], name: "index_patient_cards_on_employee_id"
     t.index ["patient_id"], name: "index_patient_cards_on_patient_id"
@@ -149,6 +139,7 @@ ActiveRecord::Schema.define(version: 20180411152642) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "city"
     t.index ["hospital_id"], name: "index_polyclinics_on_hospital_id"
   end
 
@@ -168,7 +159,6 @@ ActiveRecord::Schema.define(version: 20180411152642) do
   add_foreign_key "contracts", "laboratories"
   add_foreign_key "departments", "blocks"
   add_foreign_key "departments", "department_types"
-  add_foreign_key "employees", "employee_categories"
   add_foreign_key "hospital_staffs", "employees"
   add_foreign_key "hospital_staffs", "hospitals"
   add_foreign_key "patient_cards", "employees"

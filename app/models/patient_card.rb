@@ -2,16 +2,18 @@
 #
 # Table name: patient_cards
 #
-#  id          :integer          not null, primary key
-#  clinic_type :string
-#  clinic_id   :integer
-#  diagnosis   :string
-#  employee_id :integer
-#  patient_id  :integer
-#  begin       :datetime
-#  end         :datetime
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id                 :integer          not null, primary key
+#  clinic_type        :string
+#  clinic_id          :integer
+#  diagnosis          :string
+#  employee_id        :integer
+#  patient_id         :integer
+#  begin              :datetime
+#  end                :datetime
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  operations_success :integer
+#  operations_fails   :integer
 #
 
 class PatientCard < ApplicationRecord

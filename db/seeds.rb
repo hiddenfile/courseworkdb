@@ -11,75 +11,74 @@ end
 
 puts "polyclinic.rb"
 5.times do
-  Polyclinic.create!(name: "#{Forgery('name').full_name}. Clinic")
+  Polyclinic.create!(name: "#{Forgery('name').full_name}. Clinic", city: Forgery('address').city)
 end
-Hospital.pluck(:id).shuffle.each do |hospital_id|
-  Polyclinic.create!(hospital_id: hospital_id, name: "#{Forgery('name').full_name}. Clinic")
+Hospital.all.each do |hospital|
+  Polyclinic.create!(hospital: hospital, name: "#{Forgery('name').full_name}. Clinic", city: hospital.city)
 end
 
-puts "employee_category.rb"
-%w(Allergist Geneticist Gynecologist Dermatologist Nutritionist ENT Mammologist Masseur
-Neurologist Pediatrician Psychiatrist Dentist Therapist Urologist Surgeon Endocrinologist
-Pediatrician Rheumatologist FamilyDoctor Pharmacologist).each do|kind|
-  4.times do |level|
-    EmployeeCategory.create!(kind: kind, level: level, salary_incrase: 10*level, vacation: 1*level, danger: 5*level)
-  end
-end
 
 puts "employee.rb"
-EmployeeCategory.all.each do |category|
-  operation_fails = operation_count = 0
-  if %w(Surgeon Dentist Gynecologist).include?(category.kind)
-    operation_count = rand(100)
-    operation_fails = rand(100)
-  end
+50.times do
   Employee.create!(first_name: Forgery('name').first_name, last_name: Forgery('name').last_name,
-                  employee_category: category, operation_fails: operation_fails, operation_count: operation_count)
+                   specialty: Employee::SPECIALITY.sample, level: rand(3) + 1)
 end
-categories = EmployeeCategory.all
-20.times do
-  category = categories.sample
-  operation_fails = operation_count = 0
-  if %w(Surgeon Dentist Gynecologist).include?(category.kind)
-    operation_count = rand(100)
-    operation_fails = rand(100)
-  end
+50.times do
   Employee.create!(first_name: Forgery('name').first_name, last_name: Forgery('name').last_name,
-                  employee_category: category, operation_fails: operation_fails, operation_count: operation_count)
+                   specialty: Employee::SUPPORT.sample)
+end
+
+puts "hospital_staff.rb"
+Employee.all.each do |employee|
+  if employee.id.even?
+    hospital = Hospital.all.sample
+    HospitalStaff.create!(employee: employee, hospital: hospital)
+  end
+end
+
+
+puts "polyclinic_staff.rb"
+Employee.all.each do |employee|
+  unless employee.id.even?
+    polyclinic = Polyclinic.all.sample
+    PolyclinicStaff.create!(employee: employee, polyclinic: polyclinic)
+  end
 end
 
 
 puts "patient_card.rb"
 diagnoses = ['avitaminosis', 'allergy', 'alcoholism', 'angioma', 'anury', 'arthrosis', 'arthritis', 'asthma', 'atherosclerosis',
- 'basil disease', 'delirium tremens', 'wall-eye', 'botulism', 'bronchitis', 'bronchospasm', 'brucellosis',
- 'stomach ulcer', 'smallpox', 'OX', 'sinusitis', 'hemorrhoids', 'hemochromatosis', 'hepatitis', 'pulmonary hypertension',
- 'gonorrhea', 'flu', 'diabetes', 'dysentery', 'diphtheria', 'pneumonia', 'cold', 'eczema', 'encephalitis', 'stroke',
- 'infarct', 'caries', 'colitis', 'measles', 'leukemia', 'malaria', 'marasmus', 'mastitis', 'mastopathy',
- 'myocardial infarction', 'swelling of the lungs', 'addiction', 'ornithosis', 'otitis', 'poisoning', 'osteochondrosis',
- 'pediculosis', 'poliomyelitis', 'tetanus', 'leprosy', 'radiation sickness', 'psoriasis', 'cancer', 'radiculitis', 'anthrax',
- 'syphilis', 'Skumina\'s syndrome', 'sinusitis', 'rabies', 'AIDS', 'sarcoma', 'scoliosis', 'typhus (typhus)',
- 'tuberculosis (dryness)', 'cholera', 'scurvy', 'schizophrenia']
+             'basil disease', 'delirium tremens', 'wall-eye', 'botulism', 'bronchitis', 'bronchospasm', 'brucellosis',
+             'stomach ulcer', 'smallpox', 'OX', 'sinusitis', 'hemorrhoids', 'hemochromatosis', 'hepatitis', 'pulmonary hypertension',
+             'gonorrhea', 'flu', 'diabetes', 'dysentery', 'diphtheria', 'pneumonia', 'cold', 'eczema', 'encephalitis', 'stroke',
+             'infarct', 'caries', 'colitis', 'measles', 'leukemia', 'malaria', 'marasmus', 'mastitis', 'mastopathy',
+             'myocardial infarction', 'swelling of the lungs', 'addiction', 'ornithosis', 'otitis', 'poisoning', 'osteochondrosis',
+             'pediculosis', 'poliomyelitis', 'tetanus', 'leprosy', 'radiation sickness', 'psoriasis', 'cancer', 'radiculitis', 'anthrax',
+             'syphilis', 'Skumina\'s syndrome', 'sinusitis', 'rabies', 'AIDS', 'sarcoma', 'scoliosis', 'typhus (typhus)',
+             'tuberculosis (dryness)', 'cholera', 'scurvy', 'schizophrenia']
 
-count = 0
-[Polyclinic, Hospital].each do |hospital|
-  hospital.all.each do |clinic|
-    Employee.all.each do |employee|
-      Patient.all.each do |patient|
-        diagnosis = diagnoses.sample
-        break if count > 100000
-        start_time = (5.year.ago + rand(1000).days)
-        end_time = start_time + rand(1000).days
-        PatientCard.create!(clinic: clinic, diagnosis: diagnosis, employee: employee, patient: patient,
-                           begin: start_time,
-                           end: end_time
+(PolyclinicStaff.all + HospitalStaff.all).each do |staff|
+  clinic = staff.is_a?(HospitalStaff) ? staff.hospital : staff.polyclinic
+  next if Employee::SUPPORT.include?(staff.employee.specialty)
+  Patient.all.each do |patient|
+    diagnosis = diagnoses.sample
+    start_time = (5.year.ago + rand(1000).days)
+    end_time = start_time + rand(1000).days
 
-        )
-        count +=1
-      end
+    operations_success = operations_fails = 0
+    if %w(Surgeon Dentist Gynecologist).include?(staff.employee.specialty)
+      operations_success = rand(3)
+      operations_fails = rand(3)
     end
+
+    PatientCard.create!(clinic: clinic, diagnosis: diagnosis, employee: staff.employee, patient: patient,
+                        begin: start_time,
+                        end: end_time,
+                        operations_success: operations_success,
+                        operations_fails: operations_fails
+    )
   end
 end
-
 
 puts "laboratory.rb"
 10.times do
@@ -89,7 +88,7 @@ end
 puts "analyze.rb"
 Laboratory.all.each do |laboratory|
   Patient.all.each do |patient|
-    Analyze.create!(name: "Analyze set N#{rand(10)+ 1}", laboratory: laboratory, patient: patient)
+    Analyze.create!(name: "Analyze set N#{rand(10) + 1}", laboratory: laboratory, patient: patient)
   end
 end
 
@@ -97,7 +96,7 @@ puts "contract.rb"
 Laboratory.all.each do |laboratory|
   [Polyclinic, Hospital].each do |hospital|
     hospital.all.each do |clinic|
-      Contract.create!(clinic: clinic, laboratory: laboratory, description: Forgery('lorem_ipsum').text	)
+      Contract.create!(clinic: clinic, laboratory: laboratory, description: Forgery('lorem_ipsum').text)
     end
   end
 end
@@ -106,7 +105,7 @@ end
 puts "block.rb"
 Hospital.all.each do |hospital|
   rand(10).times do |i|
-    Block.create!(name: "Block N#{i+1}", hospital: hospital)
+    Block.create!(name: "Block N#{i + 1}", hospital: hospital)
   end
 end
 
@@ -117,7 +116,7 @@ end
 
 puts "department.rb"
 Block.all.each do |block|
-  (rand(2)+1).times do
+  (rand(2) + 1).times do
     Department.create!(block: block, department_type: DepartmentType.all.sample)
   end
 end
@@ -125,32 +124,14 @@ end
 puts "ward.rb"
 Department.all.each do |department|
   rand(5).times do |i|
-    Ward.create!(department: department, name: "Ward N#{i+1}")
+    Ward.create!(department: department, name: "Ward N#{i + 1}")
   end
 end
 
 puts "bed.rb"
 Ward.all.each do |ward|
   rand(10).times do |i|
-    Bed.create!(ward: ward, bed_number: i+1, patient: Patient.all.sample)
-  end
-end
-
-puts "hospital_staff.rb"
-Hospital.all.each do |hospital|
-  Employee.all.each do |employee|
-    if employee.id.even?
-      HospitalStaff.create!(employee: employee, hospital: hospital)
-    end
-  end
-end
-
-puts "polyclinic_staff.rb"
-Polyclinic.all.each do |polyclinic|
-  Employee.all.each do |employee|
-    unless employee.id.even?
-      PolyclinicStaff.create!(employee: employee, polyclinic: polyclinic)
-    end
+    Bed.create!(ward: ward, bed_number: i + 1, patient: Patient.all.sample)
   end
 end
 
