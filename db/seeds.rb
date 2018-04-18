@@ -17,11 +17,11 @@ Hospital.all.each do |hospital|
   Polyclinic.create!(hospital: hospital, name: "#{Forgery('name').full_name}. Clinic", city: hospital.city)
 end
 
-
 puts "employee.rb"
+academic = %w(candidate doctor associate professor)
 50.times do
   Employee.create!(first_name: Forgery('name').first_name, last_name: Forgery('name').last_name,
-                   specialty: Employee::SPECIALITY.sample, level: rand(3) + 1)
+                   specialty: Employee::SPECIALITY.sample, level: rand(3) + 1, academic_degree: (academic + Array.new(4)).sample)
 end
 50.times do
   Employee.create!(first_name: Forgery('name').first_name, last_name: Forgery('name').last_name,
@@ -32,7 +32,8 @@ puts "hospital_staff.rb"
 Employee.all.each do |employee|
   if employee.id.even?
     hospital = Hospital.all.sample
-    HospitalStaff.create!(employee: employee, hospital: hospital)
+    start_time = (6.year.ago + rand(1000).days)
+    HospitalStaff.create!(employee: employee, hospital: hospital, hired_at: start_time)
   end
 end
 
@@ -41,7 +42,8 @@ puts "polyclinic_staff.rb"
 Employee.all.each do |employee|
   unless employee.id.even?
     polyclinic = Polyclinic.all.sample
-    PolyclinicStaff.create!(employee: employee, polyclinic: polyclinic)
+    start_time = (6.year.ago + rand(1000).days)
+    PolyclinicStaff.create!(employee: employee, polyclinic: polyclinic, hired_at: start_time)
   end
 end
 

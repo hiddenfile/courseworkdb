@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180416182518) do
+ActiveRecord::Schema.define(version: 20180417220400) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,6 +84,8 @@ ActiveRecord::Schema.define(version: 20180416182518) do
     t.bigint "employee_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "hired_at"
+    t.date "fired_at"
     t.index ["employee_id"], name: "index_hospital_staffs_on_employee_id"
     t.index ["hospital_id"], name: "index_hospital_staffs_on_hospital_id"
   end
@@ -130,6 +132,8 @@ ActiveRecord::Schema.define(version: 20180416182518) do
     t.bigint "employee_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "hired_at"
+    t.date "fired_at"
     t.index ["employee_id"], name: "index_polyclinic_staffs_on_employee_id"
     t.index ["polyclinic_id"], name: "index_polyclinic_staffs_on_polyclinic_id"
   end
