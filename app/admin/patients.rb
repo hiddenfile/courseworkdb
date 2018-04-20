@@ -5,5 +5,5 @@ ActiveAdmin.register Patient do
     end
   end
 
-filter :id
+
 end

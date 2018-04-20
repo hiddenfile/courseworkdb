@@ -18,6 +18,8 @@
 
 class PatientCard < ApplicationRecord
   belongs_to :clinic, polymorphic: true
+  belongs_to :hospital, foreign_key: :clinic_id, foreign_type: 'Hospital'
+  belongs_to :polyclinic, foreign_key: :clinic_id, foreign_type: 'Polyclinic'
   belongs_to :employee
   belongs_to :patient
 end
