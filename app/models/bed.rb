@@ -27,4 +27,7 @@ class Bed < ApplicationRecord
     end
   end
 
+  def name
+    "bed id:#{id} number:#{bed_number}"
+  end
 end

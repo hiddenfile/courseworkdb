@@ -5,5 +5,5 @@ ActiveAdmin.register Ward do
     end
   end
 
-
+  scope(:full_empty)
 end

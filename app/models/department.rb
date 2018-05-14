@@ -13,4 +13,9 @@ class Department < ApplicationRecord
   belongs_to :block
   belongs_to :department_type
   has_many :wards, dependent: :destroy
+
+  def name
+    "Dep id:#{id}"
+  end
+
 end

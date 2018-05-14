@@ -12,4 +12,8 @@
 class Ward < ApplicationRecord
   belongs_to :department
   has_many :beds, dependent: :destroy
+  scope :full_empty, -> do
+    ward_id = Bed.select('ward_id').where.not(patient_id: nil).group('ward_id').pluck(:ward_id)
+    self.where.not(id: ward_id)
+  end
 end
