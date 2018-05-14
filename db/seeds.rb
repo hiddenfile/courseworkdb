@@ -132,8 +132,12 @@ end
 
 puts "bed.rb"
 Ward.all.each do |ward|
-  rand(10).times do |i|
+  rand  = rand(10)
+  rand.times do |i|
     Bed.create!(ward: ward, bed_number: i + 1, patient: Patient.all.sample)
+  end
+  rand.times do |i|
+    Bed.create!(ward: ward, bed_number: rand + i + 1)
   end
 end
 

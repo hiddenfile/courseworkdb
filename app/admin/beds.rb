@@ -5,4 +5,14 @@ ActiveAdmin.register Bed do
     end
   end
 
+  filter :id
+  filter :bed_number
+  filter :hospital
+  filter :block
+  filter :department
+  filter :ward
+  filter :by_patient, as: :select, collection: proc{
+    [["No Patients", 'none']] + (Patient.all.map{|p| [p.name, p.id]})
+  }
+
 end
