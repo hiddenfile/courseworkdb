@@ -303,10 +303,10 @@ ActiveAdmin.setup do |config|
     admin.logout_link_path = :destroy_admin_session_path
   end
 
-  # config.namespace :admin do |admin|
-  #   admin.authentication_method = :authenticate_teacher!
-  #   admin.current_user_method = :current_teacher
-  #   admin.logout_link_path = :destroy_teacher_session_path
-  #   admin.root_to = 'dashboard#index'
-  # end
+  config.namespace :employees do |admin|
+    admin.authentication_method = :authenticate_employee!
+    admin.current_user_method = :current_employee
+    admin.logout_link_path = :destroy_employee_session_path
+    admin.root_to = 'dashboard#index'
+  end
 end
