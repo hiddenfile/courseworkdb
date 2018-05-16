@@ -13,6 +13,10 @@
 #
 
 class Employee < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
   SUPPORT = %w(nurse cleaner handyman rest accountant)
   SPECIALITY = %w(Allergist Geneticist Gynecologist Dermatologist Nutritionist ENT Mammologist Masseur
                     Neurologist Pediatrician Psychiatrist Dentist Therapist Urologist Surgeon Endocrinologist
