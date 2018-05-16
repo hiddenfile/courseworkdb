@@ -74,8 +74,8 @@ diagnoses = ['avitaminosis', 'allergy', 'alcoholism', 'angioma', 'anury', 'arthr
     end
 
     PatientCard.create!(clinic: clinic, diagnosis: diagnosis, employee: staff.employee, patient: patient,
-                        begin: start_time,
-                        end: end_time,
+                        start_at: start_time,
+                        end_at: end_time,
                         operations_success: operations_success,
                         operations_fails: operations_fails
     )
@@ -126,12 +126,12 @@ end
 puts "ward.rb"
 Department.all.each do |department|
   rand(5).times do |i|
-    Ward.create!(department: department, name: "Ward N#{i + 1}")
+    Ward.create!(department: department, name: "Ward N#{i + 1}", employee: Employee.doctors.all.sample, kind: Ward::KIND.sample)
   end
 end
 
 puts "bed.rb"
-Ward.all.each do |ward|
+Ward.for_patients.all.each do |ward|
   rand  = rand(10)
   rand.times do |i|
     Bed.create!(ward: ward, bed_number: i + 1, patient: Patient.all.sample)

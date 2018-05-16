@@ -4,6 +4,4 @@ ActiveAdmin.register Block do
       params.permit!
     end
   end
-
-
 end
