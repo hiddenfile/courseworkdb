@@ -290,4 +290,18 @@ ActiveAdmin.setup do |config|
   # You can inherit it with own class and inject it for all resources
   #
   # config.order_clause = MyOrderClause
+  #
+  config.default_namespace = :admins
+  config.namespace :admins do |admin|
+    admin.authentication_method = :authenticate_admin!
+    admin.current_user_method = :current_admin
+    admin.logout_link_path = :destroy_admin_session_path
+  end
+
+  # config.namespace :admin do |admin|
+  #   admin.authentication_method = :authenticate_teacher!
+  #   admin.current_user_method = :current_teacher
+  #   admin.logout_link_path = :destroy_teacher_session_path
+  #   admin.root_to = 'dashboard#index'
+  # end
 end
