@@ -143,6 +143,3 @@ Ward.for_patients.all.each do |ward|
   end
 end
 
-puts "admin.rb"
-Admin.create!(email: "admin1@example.com", password: 'abcdef', password_confirmation: 'abcdef')
-

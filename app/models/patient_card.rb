@@ -8,8 +8,8 @@
 #  diagnosis          :string
 #  employee_id        :integer
 #  patient_id         :integer
-#  begin              :datetime
-#  end                :datetime
+#  start_at           :datetime
+#  end_at             :datetime
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  operations_success :integer

@@ -8,7 +8,7 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  kind          :string
-#  employer_id   :integer
+#  employee_id   :integer
 #
 
 class Ward < ApplicationRecord
