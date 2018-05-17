@@ -39,6 +39,7 @@ class Employee < ApplicationRecord
   has_many :patient_cards, dependent: :destroy
   scope :support, -> {where(specialty: SUPPORT)}
   scope :doctors, -> {where(specialty: SPECIALITY)}
+  scope :skip_admins, -> {where(role: 'user')}
 
   scope :by_hospital, -> (hospital){ select('employees.*, hospitals.name as additional').joins(hospital_staffs: :hospital).where(hospitals: {name: hospital}) }
   scope :by_polyclinic, -> (clinic){ select('employees.*, polyclinics.name as additional').joins(polyclinic_staffs: :polyclinic).where(polyclinics: {name: clinic}) }
@@ -75,6 +76,10 @@ class Employee < ApplicationRecord
 
   def name
     "#{first_name} #{last_name}"
+  end
+
+  def admin?
+    role == 'admin'
   end
 
 

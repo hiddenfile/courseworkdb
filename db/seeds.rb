@@ -19,6 +19,9 @@ end
 
 puts "employee.rb"
 academic = %w(candidate doctor associate professor)
+Employee.create!(email: "admin1@example.com",password: 'abcdef', password_confirmation: 'abcdef',
+                 first_name: 'Max', last_name: 'Dolgih', role: :admin)
+
 50.times do |i|
   Employee.create!(email: "user#{i}@example.com",password: 'abcdef', password_confirmation: 'abcdef',
                    first_name: Forgery('name').first_name, last_name: Forgery('name').last_name,
@@ -31,7 +34,7 @@ end
 end
 
 puts "hospital_staff.rb"
-Employee.all.each do |employee|
+Employee.skip_admins.all.each do |employee|
   if employee.id.even?
     hospital = Hospital.all.sample
     start_time = (6.year.ago + rand(1000).days)
@@ -41,7 +44,7 @@ end
 
 
 puts "polyclinic_staff.rb"
-Employee.all.each do |employee|
+Employee.skip_admins.all.each do |employee|
   unless employee.id.even?
     polyclinic = Polyclinic.all.sample
     start_time = (6.year.ago + rand(1000).days)
@@ -128,7 +131,7 @@ end
 puts "ward.rb"
 Department.all.each do |department|
   rand(5).times do |i|
-    Ward.create!(department: department, name: "Ward N#{i + 1}", employee: Employee.doctors.all.sample, kind: Ward::KIND.sample)
+    Ward.create!(department: department, name: "Ward N#{i + 1}", employee: Employee.skip_admins.doctors.all.sample, kind: Ward::KIND.sample)
   end
 end
 

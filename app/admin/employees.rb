@@ -1,4 +1,18 @@
 ActiveAdmin.register Employee do
+  menu :if => proc{current_employee.admin?}
+  before_action :check_role, only: [:show, :edit, :update, :destroy]
+
+  controller do
+    def check_role
+      if current_employee.id == params[:id].to_i || current_employee.admin?
+        return
+      else
+        redirect_to '/'
+      end
+    end
+  end
+
+
   filter :id
   filter :first_name
   filter :last_name
