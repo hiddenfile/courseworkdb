@@ -33,7 +33,7 @@ ActiveAdmin.setup do |config|
   #   config.default_namespace = false
   #
   # Default:
-  config.default_namespace = nil
+  #config.default_namespace = nil
   #
   # You can customize the settings for each namespace by using
   # a namespace block. For example, to change the site title
@@ -98,7 +98,7 @@ ActiveAdmin.setup do |config|
   # will call the method to return the path.
   #
   # Default:
-  config.logout_link_path = :destroy_admin_user_session_path
+  #config.logout_link_path = :destroy_admin_user_session_path
 
   # This setting changes the http method used when rendering the
   # link. For example :get, :delete, :put, etc..
@@ -296,17 +296,17 @@ ActiveAdmin.setup do |config|
   config.meta_tags_for_logged_out_pages = meta_tags_options
 
 
-  config.default_namespace = :admins
-  config.namespace :admins do |admin|
-    admin.authentication_method = :authenticate_admin!
-    admin.current_user_method = :current_admin
-    admin.logout_link_path = :destroy_admin_session_path
-  end
+  config.default_namespace = nil
+  # config.namespace :admins do |admin|
+  #   admin.authentication_method = :authenticate_admin!
+  #   admin.current_user_method = :current_admin
+  #   admin.logout_link_path = :destroy_admin_session_path
+  # end
 
-  config.namespace :employees do |admin|
-    admin.authentication_method = :authenticate_employee!
-    admin.current_user_method = :current_employee
-    admin.logout_link_path = :destroy_employee_session_path
-    admin.root_to = 'dashboard#index'
-  end
+  # config.namespace :employees do |admin|
+  config.authentication_method = :authenticate_employee!
+  config.current_user_method = :current_employee
+  config.logout_link_path = :destroy_employee_session_path
+    #config.root_to = 'dashboard#index'
+  #end
 end

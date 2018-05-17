@@ -19,12 +19,14 @@ end
 
 puts "employee.rb"
 academic = %w(candidate doctor associate professor)
-50.times do
-  Employee.create!(first_name: Forgery('name').first_name, last_name: Forgery('name').last_name,
+50.times do |i|
+  Employee.create!(email: "user#{i}@example.com",password: 'abcdef', password_confirmation: 'abcdef',
+                   first_name: Forgery('name').first_name, last_name: Forgery('name').last_name,
                    specialty: Employee::SPECIALITY.sample, level: rand(3) + 1, academic_degree: (academic + Array.new(4)).sample)
 end
-50.times do
-  Employee.create!(first_name: Forgery('name').first_name, last_name: Forgery('name').last_name,
+50.times do |i|
+  Employee.create!(email: "user#{50 + i}@example.com",password: 'abcdef', password_confirmation: 'abcdef',
+                   first_name: Forgery('name').first_name, last_name: Forgery('name').last_name,
                    specialty: Employee::SUPPORT.sample)
 end
 
@@ -140,4 +142,7 @@ Ward.for_patients.all.each do |ward|
     Bed.create!(ward: ward, bed_number: rand + i + 1)
   end
 end
+
+puts "admin.rb"
+Admin.create!(email: "admin1@example.com", password: 'abcdef', password_confirmation: 'abcdef')
 
