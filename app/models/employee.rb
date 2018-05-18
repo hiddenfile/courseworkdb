@@ -62,11 +62,11 @@ class Employee < ApplicationRecord
   scope :operations_less_than, -> (count){operations(count, '<')}
 
   scope :by_experience, -> (years){
-    select('employees.*, (sum(patient_cards.operations_fails) + sum(patient_cards.operations_success)) as additional').
+    select("employees.*, (date_part('year',now()) - date_part('year', hospital_staffs.hired_at))::integer as additional").
     joins(%Q{LEFT JOIN "polyclinic_staffs" ON "polyclinic_staffs"."employee_id" = "employees"."id"}).
         joins(%Q{INNER JOIN "hospital_staffs" ON "hospital_staffs"."employee_id" = "employees"."id"}).
-        where("(:year_now - date_part('year', hospital_staffs.hired_at)) > :years or (:year_now - date_part('year', polyclinic_staffs.hired_at)) = :years", years: years.to_i, year_now: Date.today.year).
-        group('employees.id')
+        where("(:year_now - date_part('year', hospital_staffs.hired_at)) > :years or (:year_now - date_part('year', polyclinic_staffs.hired_at)) = :years", years: years.to_i, year_now: Date.today.year)
+        #group('employees.id')
   }
   class << self
     def ransackable_scopes(auth_object = nil)

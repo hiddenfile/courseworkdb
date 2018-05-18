@@ -8,8 +8,8 @@ ActiveAdmin.register PatientCard do
   filter :polyclinic
   filter :employee
   filter :patient
-  filter :begin
-  filter :end
+  filter :start_at
+  filter :end_at
 
 
 end
